@@ -11,7 +11,7 @@ namespace AxionForge {
     bool Stack<type>::isEmpty() const {
         return top == nullptr;
     }
-
+    
     // Element access
     template<typename type>
     type* Stack<type>::Top() {
