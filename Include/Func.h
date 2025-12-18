@@ -1,233 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <cassert>
-
-#include <SDL3/SDL.h>
-
-#include "../SDL3_Developement_Project/Include/Enums.h"
-
-#include "../SDL3_Developement_Project/Include/DataStructures.h"
-
-class File {
-public:
-	std::ifstream* file = nullptr;
-
-	File() {
-	}
-	File(const std::string& filename) {
-		file = new std::ifstream(filename, std::ios::binary);
-		if (!file) throw std::runtime_error("Cannot open file");
-	}
-	bool isLoaded() const {
-		return file ? true : false;
-	}
-};
-
-class IMAGE :File {
-public:
-	int width = 0;
-	int height = 0;
-	Color** pixelMatrix = nullptr;
-	IMAGE() {
-	}
-	IMAGE(const std::string& fileName) : File(fileName) {
-	}
-
-	bool isLoaded() const {
-		return File::isLoaded();
-	}
-
-	Color** getData() {
-		file->seekg(18);
-		file->read(reinterpret_cast<char*>(&width), 4);
-		file->read(reinterpret_cast<char*>(&height), 4);
-		file->seekg(10);
-		uint32_t pixelDataOffset = 0;
-		file->read(reinterpret_cast<char*>(&pixelDataOffset), 4);
-		file->seekg(pixelDataOffset);
-
-		// Each row is padded to a multiple of 4 bytes
-		int rowSize = ((24 * width + 31) / 32) * 4;
-
-		std::vector<uint8_t> rowData(rowSize);
-
-		pixelMatrix = (Color**)calloc(height, sizeof(Color*));
-		if (!pixelMatrix) {
-			printError("Color** Object 'pixelMatrix' allocation", "Failed to allocate 'pixelMatrix' via calloc");
-			return nullptr;
-		}
-		int i;
-		for (i = 0; i < height; i++) {
-			if (pixelMatrix + i)
-				pixelMatrix[i] = (Color*)calloc(width, sizeof(Color));
-			else {
-				printError("Color* Object 'pixelMatrix[i]' allocation", "Failed to allocate 'pixelMatrix[i]' via calloc");
-				return nullptr;
-			}
-		}
-		for (int y = height - 1; y >= 0; --y) {
-			file->read(reinterpret_cast<char*>(rowData.data()), rowSize);
-			for (int x = 0; x < width; ++x) {
-				if (pixelMatrix[y])
-					pixelMatrix[y][x] = Color(rowData[x * 3 + 0], rowData[x * 3 + 1], rowData[x * 3 + 2]);
-				else {
-					printError("Color Object 'pixelMatrix[y][x]' allocation", "Failed to allocate 'pixelMatrix[y][x]' via calloc");
-					return nullptr;
-				}
-			}
-		}
-		return pixelMatrix;
-	}
-
-	~IMAGE() {
-		free(file);
-		for (int i = 0; i < height; i++)
-			free(pixelMatrix[i]);
-		free(pixelMatrix);
-		width = 0;
-		height = 0;
-	}
-};
-
-class Renderer;
-
-class Object {
-protected:
-	bool isRendering = true;
-public:
-	Vector2 position;
-	Vector2 size;
-	//Constructors
-	Object() {
-		position = Vector2(0, 0);
-		size = Vector2(0, 0);
-	}
-	Object(Vector2 position, Vector2 size) {
-		this->position = position;
-		this->size = size;
-	}
-	//Show Status
-	void Show() { isRendering = true; }
-	void Hide() { isRendering = false; }
-	bool isShown() const { return isRendering; }
-	//Render
-	virtual void Render(Renderer* renderer) { }
-};
-
-void renderRect(SDL_Renderer* renderer, Vector2 position, Vector2 size) {
-	SDL_RenderRect(renderer, new SDL_FRect{ position.x, position.y, size.x, size.y });
-}
-
-class Renderer {
-	SDL_Renderer* renderer = nullptr;
-public:
-	Renderer() = default;
-
-	Renderer(const Renderer&) = delete;
-	Renderer& operator=(const Renderer&) = delete;
-	Renderer(Renderer&&) = delete;
-	Renderer& operator=(Renderer&&) = delete;
-
-	SDL_Renderer* Instance() {
-		return renderer;
-	}
-
-	SDL_Renderer** InstanceAddress() {
-		return &renderer;
-	}
-
-	void Delay(int x) {
-		SDL_Delay(x);
-	}
-
-	void Clear() {
-		SDL_RenderClear(renderer);
-	}
-
-	void Render() {
-		SDL_RenderPresent(renderer);
-	}
-
-	void setDrawColor(Color color, Opacity opacity = OPACITY::OPAQUE) {
-		SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, opacity.alpha);
-	}
-
-	void setScale(float x) {
-		SDL_SetRenderScale(renderer, x, x);
-	}
-
-	void RenderObject(Object* object) {
-		object->Render(this);
-	}
-
-	void RenderPoint(Vector2 position, Color color = COLOR::BLACK) {
-		setDrawColor(color);
-		SDL_RenderPoint(renderer, position.x, position.y);
-	}
-
-	void RenderLine(Vector2 start, Vector2 end, Color color = COLOR::BLACK) {
-		setDrawColor(color);
-		SDL_RenderLine(renderer, start.x, start.y, end.x, end.y);
-	}
-
-	void RenderFillRect(Vector2 position, Vector2 size, Color color = COLOR::BLACK) {
-		setDrawColor(color);
-		SDL_FRect rect{ position.x, position.y, size.x, size.y };
-		SDL_RenderFillRect(renderer, &rect);
-	}
-
-	void RenderCircle(float radius, Vector2 center, Color color = COLOR::BLACK) {
-		setDrawColor(color);
-
-		float x = radius;
-		float y = 0;
-		float err = 0;
-
-		while (x >= y) {
-			SDL_RenderPoint(renderer, center.x + x, center.y + y);
-			SDL_RenderPoint(renderer, center.x + y, center.y + x);
-			SDL_RenderPoint(renderer, center.x - y, center.y + x);
-			SDL_RenderPoint(renderer, center.x - x, center.y + y);
-			SDL_RenderPoint(renderer, center.x - x, center.y - y);
-			SDL_RenderPoint(renderer, center.x - y, center.y - x);
-			SDL_RenderPoint(renderer, center.x + y, center.y - x);
-			SDL_RenderPoint(renderer, center.x + x, center.y - y);
-
-			if (err <= 0) {
-				y++;
-				err += 2 * y + 1;
-			}
-			if (err > 0) {
-				x--;
-				err -= 2 * x + 1;
-			}
-		}
-	}
-
-	~Renderer() {
-		SDL_DestroyRenderer(renderer);
-	}
-};
-
-class Event {
-public:
-	EventType type;
-	Keys key;
-};
-
-template<typename type>
-class EventHandler {
-	
-};
-/*
-EventHandler - handles events of an Object
-
-
-*/
 class Window {
 	SDL_Window* window = nullptr;
-	Color backgroundcolor = COLOR::WHITE;
+	Color backgroundcolor = ColorName::White;
 
 public:
 	int Width = 500;
@@ -310,7 +83,7 @@ class Point : public Object{
 public:
 	Color color;
 	Point() { }
-	Point(Vector2 position, Color color = COLOR::BLACK) {
+	Point(Vector2 position, Color color = ColorName::Black) {
 		this->position = position;
 		this->color = color;
 	}
@@ -324,7 +97,7 @@ public:
 	Vector2 end;
 	Color color;
 	Line( ) {}
-	Line(Vector2 position, Vector2 end, Color color = COLOR::BLACK) {
+	Line(Vector2 position, Vector2 end, Color color = ColorName::Black) {
 		this->position = position;
 		this->end = end;
 		this->color = color;
@@ -349,7 +122,7 @@ public:
 class ColorRect : public Object {
 public:
 	Color color;
-	Opacity opacity = OPACITY::OPAQUE;
+	Opacity opacity = OpacityLevel::Opaque;
 	ColorRect() {}
 	ColorRect(Vector2 Origin, Vector2 Size) {
 		position = Origin;
@@ -407,7 +180,7 @@ class ColorCollider : public Collider {
 public:
 	Color color;
 	ColorCollider() {}
-	ColorCollider(Vector2 position, Vector2 size, Color color = COLOR::BLACK) {
+	ColorCollider(Vector2 position, Vector2 size, Color color = ColorName::Black) {
 		this->position = position;
 		this->size = size;
 		this->color = color;
@@ -494,15 +267,15 @@ public:
 	Graph() {
 		position = Vector2();
 	}
-	Graph(LinkedList<Vector2> values, Color color = COLOR::BLACK) : Graph() {
+	Graph(LinkedList<Vector2> values, Color color = ColorName::Black) : Graph() {
 		this->values.Add(values);
 		this->colors.Add(color);
 	}
-	Graph(Vector2 position, LinkedList<Vector2>& values, Color color = COLOR::BLACK) : Graph(values, color) {
+	Graph(Vector2 position, LinkedList<Vector2>& values, Color color = ColorName::Black) : Graph(values, color) {
 		this->position = position;
 	}
 
-	void Add(LinkedList<Vector2> values, Color color = COLOR::BLACK) {
+	void Add(LinkedList<Vector2> values, Color color = ColorName::Black) {
 		this->values.Add(values);
 		this->colors.Add(color);
 	}
@@ -524,69 +297,7 @@ public:
 		renderer->RenderLine(
 			Vector2(position.x, position.y + size.y),
 			Vector2(position.x + size.x, position.y + size.y),
-			COLOR::BLACK
-		);
-		Node<Color>* color = colors.getRoot();
-		// Draw each graph (start from 0, not 1)
-		for (int i = 0; i < values.Length(); i++) {
-
-			if (values[i].Length() < 2)
-				continue; // cannot draw a line
-
-			Vector2 first = values[i][0];
-			Vector2 prev = position + Vector2(first.x, size.y - first.y);
-			
-			for (int j = 1; j < values[i].Length(); j++) {
-
-				Vector2 point = values[i][j];
-				Vector2 next = position + Vector2(point.x, size.y - point.y);
-
-				renderer->RenderLine(prev, next, color->value);
-				prev = next;
-			}
-			color = color->next;
-		}
-	}
-};
-//standard function
-class Function : public Static_Class {
-public:
-	static float Standard(float a, float x, float c) {
-		return a * x + c;
-	}
-	static float Quadratic(float x) {
-		return x * x;
-	}
-	static float Sin(float angle) {
-		return sinf(angle * M_PI / 180);
-	}
-	static float Cos(float angle) {
-		return cosf(angle * M_PI / 180);
-	}
-};
-
-class Coordinate_System : public Object{
-	float left;
-	float right;
-	float top;
-	float bottom;
-public:
-	LinkedList<LinkedList<Vector2>> values;
-	LinkedList<Color> colors;
-
-
-
-	Vector2 getCenter() {
-		return position + Vector2(left, top);
-	}
-	
-
-	void Render(Renderer* renderer) override {
-		// Render X-axis baseline at y=0
-		renderer->RenderLine(
-			Vector2(position.x, position.y + size.y),
-			Vector2(position.x + size.x, position.y + size.y),
-			COLOR::BLACK
+			ColorName::Black
 		);
 		Node<Color>* color = colors.getRoot();
 		// Draw each graph (start from 0, not 1)

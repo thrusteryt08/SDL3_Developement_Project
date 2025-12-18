@@ -10,12 +10,14 @@
 
 Window window("Window", 1000, 500);
 
-
 //Startup
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
 	SDL_SetAppMetadata("App", "1.0", "com.example.renderer-clear");
 	SDL_Init(SDL_INIT_VIDEO);
+	window.setBackgroundColor(ColorName::White);
+
+	window.Objects.Add(new ColorRect(Vector2(100, 100), Vector2(200, 150), ColorName::Red));
 
 	return SDL_APP_CONTINUE;
 }

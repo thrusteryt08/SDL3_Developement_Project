@@ -1,6 +1,4 @@
 #pragma once
-#include <algorithm>
-#include <stdexcept>
 
 namespace AxionForge {
 
@@ -84,7 +82,20 @@ namespace AxionForge {
         for (int i = 0; i < index; i++) current = current->next;
         return current->value;
     }
+    // Access element at index
+    template<typename type>
+    const type& LinkedList<type>::operator[](int index) const {
+        int len = Length();
+        if (index < 0) index = len + index;
+        if (index < 0 || index >= len)
+            throw std::out_of_range("Index out of range");
 
+        Node<type>* current = root;
+        for (int i = 0; i < index; i++)
+            current = current->next;
+
+        return current->value;
+    }
 	// Get root node
     template<typename type>
     Node<type>* LinkedList<type>::getRoot() {

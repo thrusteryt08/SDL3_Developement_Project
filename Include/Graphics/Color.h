@@ -1,6 +1,6 @@
 #pragma once
-#include <SDL.h>
-#include "Core/Enums.h"
+#include <SDL3/SDL.h>
+#include "../Core/Enums.h"
 #include "Opacity.h"
 
 namespace AxionForge {
@@ -45,11 +45,11 @@ namespace AxionForge {
 		static constexpr Uint8 MAX = 255;
 
 		// Constructors
-		explicit Color() { setColor(0, 0, 0); }
-		explicit Color(Uint8 red, Uint8 green, Uint8 blue) { setColor(red, green, blue); }
-		explicit Color(Uint8 red, Uint8 green, Uint8 blue, Opacity opacity) : Color(red, green, blue) { this->opacity = opacity; }
-		explicit Color(ColorName color) { setFromColorName(color); }
-		explicit Color(ColorName color, Opacity o) : Color(color) { opacity = o; }
+		Color() { setColor(0, 0, 0); }
+		Color(Uint8 red, Uint8 green, Uint8 blue) { setColor(red, green, blue); }
+		Color(Uint8 red, Uint8 green, Uint8 blue, Opacity opacity) : Color(red, green, blue) { this->opacity = opacity; }
+		Color(ColorName color) { setFromColorName(color); }
+		Color(ColorName color, Opacity o) : Color(color) { opacity = o; }
 
 		// Operators
 		Color operator+(const Color& c) const {

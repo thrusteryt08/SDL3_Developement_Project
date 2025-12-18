@@ -1,6 +1,5 @@
 #pragma once
 #include "Node.h"
-#include <stdexcept>
 
 namespace AxionForge {
 
@@ -11,7 +10,7 @@ namespace AxionForge {
 
     public:
         LinkedList() {}
-        LinkedList(const LinkedList<type>& other) { copyFrom(other); }
+        LinkedList(const LinkedList<type>& other);
 
 		// Add element to the end
         void Add(type value);
@@ -26,6 +25,8 @@ namespace AxionForge {
         void RemoveAt(int index);
 		// Access element at index
         type& operator[](int index);
+        // Access element at index (const)
+        const type& operator[](int index) const;
 		// Check if the list is empty
 		bool isEmpty() const;
 		// Assignment operator
@@ -34,7 +35,7 @@ namespace AxionForge {
         bool operator==(const LinkedList<type>& other) const;
         int Length() const;
         type Max();
-        Node<type>* getRoot() { return root; }
+        Node<type>* getRoot();
         ~LinkedList();
     };
 

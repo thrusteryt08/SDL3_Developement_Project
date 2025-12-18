@@ -20,13 +20,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Objects\Object.cpp" />
+    <ClCompile Include="src\Graphics\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Include\Core\Vector.inl" />
     <None Include="SDL3.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\..\SDL3\lib\x64\SDL3.lib" />
     <Library Include="..\..\..\SDL3\lib\x64\SDL3_test.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Core\Vector.h" />
+    <ClInclude Include="Include\Core\Window.h" />
+    <ClInclude Include="Include\Graphics\Renderer.h" />
+    <ClInclude Include="Include\Objects\Object.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -113,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDL3\include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
