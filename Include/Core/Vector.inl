@@ -9,7 +9,7 @@ namespace AxionForge {
     void Vector<type>::Print() const {
         for (const auto& item : *this)
             std::cout << item << " ";
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 
     template<typename type>

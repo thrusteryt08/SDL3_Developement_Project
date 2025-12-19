@@ -3,36 +3,24 @@
 
 namespace AxionForge {
 
-    template<typename type>
-    class DoubleLinkNode {
-    public:
-        type value;
-        DoubleLinkNode<type>* next = nullptr;
-        DoubleLinkNode<type>* prev = nullptr;
+	template<typename type>
+	class DoubleLinkedList {
+		DoubleLinkNode<type>* root = nullptr;
+	public:
+		DoubleLinkedList() {}
+		~DoubleLinkedList();
 
-        DoubleLinkNode(type value) { this->value = value; }
-        DoubleLinkNode(type value, DoubleLinkNode<type>* next) : DoubleLinkNode(value) { this->next = next; }
-        DoubleLinkNode(type value, DoubleLinkNode<type>* next, DoubleLinkNode<type>* prev) : DoubleLinkNode(value, next) { this->prev = prev; }
-    };
+		// Capacity / Info
+		bool isEmpty() const;
+		int Length() const;
 
-    template<typename type>
-    class DoubleLinkedList {
-        DoubleLinkNode<type>* root = nullptr;
-    public:
-        DoubleLinkedList() {}
-        ~DoubleLinkedList();
+		// Element access
+		DoubleLinkNode<type>* GetRoot();
 
-        // Capacity / Info
-        bool isEmpty() const;
-        int Length() const;
-
-        // Element access
-        DoubleLinkNode<type>* GetRoot();
-
-        // Modifiers
-        void Add(type value);
-        void Clear();
-    };
+		// Modifiers
+		void Add(type value);
+		void Clear();
+	};
 
 }
 #include "DoubleLinkedList.inl"

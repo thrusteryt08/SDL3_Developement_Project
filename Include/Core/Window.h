@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SDL3/SDL.h>
-
 #include "Graphics/Renderer.h"
 #include "Vector.h"
 #include "Objects/Object.h"
