@@ -24,6 +24,8 @@ namespace AxionForge {
         void Present();
         void Delay(int ms);
 
+		void SetVSync(int x);
+
         void setDrawColor(Color color, Opacity opacity = OpacityLevel::Opaque);
         void setScale(float s);
 

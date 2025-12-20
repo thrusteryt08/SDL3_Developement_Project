@@ -27,12 +27,27 @@
     <ClCompile Include="src\Core\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Objects\Point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Rect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\ColorRect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AxionForge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL3.dll">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Include\Core\Vector.inl">
+    <None Include="Include\Core\DataStructures\Vector.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
@@ -45,7 +60,7 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Core\Vector.h">
+    <ClInclude Include="Include\Core\DataStructures\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Graphics\Renderer.h">
@@ -60,7 +75,25 @@
     <ClInclude Include="Include\AxionForge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Core\DataStructures.h">
+    <ClInclude Include="Include\DataStructures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects\ColorRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Objects\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

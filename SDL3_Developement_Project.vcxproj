@@ -20,12 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\AxionForge.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Objects\ColorRect.cpp" />
+    <ClCompile Include="src\Objects\Line.cpp" />
     <ClCompile Include="src\Objects\Object.cpp" />
     <ClCompile Include="src\Graphics\Renderer.cpp" />
+    <ClCompile Include="src\Objects\Point.cpp" />
+    <ClCompile Include="src\Objects\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Include\Core\Vector.inl" />
+    <None Include="Include\Core\DataStructures\Vector.inl" />
     <None Include="SDL3.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -34,11 +39,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\AxionForge.h" />
-    <ClInclude Include="Include\Core\DataStructures.h" />
-    <ClInclude Include="Include\Core\Vector.h" />
+    <ClInclude Include="Include\DataStructures.h" />
+    <ClInclude Include="Include\Core\DataStructures\Vector.h" />
     <ClInclude Include="Include\Core\Window.h" />
     <ClInclude Include="Include\Graphics\Renderer.h" />
+    <ClInclude Include="Include\Objects.h" />
+    <ClInclude Include="Include\Objects\ColorRect.h" />
+    <ClInclude Include="Include\Objects\Line.h" />
     <ClInclude Include="Include\Objects\Object.h" />
+    <ClInclude Include="Include\Objects\Point.h" />
+    <ClInclude Include="Include\Objects\Rect.h" />
+    <ClInclude Include="Include\Objects\Texture.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

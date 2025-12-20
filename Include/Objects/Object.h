@@ -1,27 +1,28 @@
 #pragma once
 #include "../Core/Vector2.h"
+#include "../Graphics/Renderer.h"
 
 namespace AxionForge {
 
-    class Renderer;
+	class Renderer;
 
-    class Object {
-    protected:
-        bool isRendering = true;
+	class Object {
+	protected:
+		bool isRendering = true;
 
-    public:
-        Vector2 position{};
-        Vector2 size{};
+	public:
+		Vector2 position{};
+		Vector2 size{};
 
-        Object() = default;
-        Object(Vector2 position, Vector2 size);
+		Object() = default;
+		Object(Vector2 position, Vector2 size);
 
-        void Show();
-        void Hide();
-        bool isShown() const;
+		void Show();
+		void Hide();
+		bool isShown() const;
 
-        virtual void Render(Renderer* renderer) = 0;
-        virtual ~Object() = default;
-    };
+		virtual void Render(Renderer* renderer) = 0;
+		virtual ~Object() = default;
+	};
 
 }

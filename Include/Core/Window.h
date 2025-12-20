@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Graphics/Renderer.h"
-#include "Vector.h"
-#include "Objects/Object.h"
 #include "Graphics/Color.h"
+#include "Objects/Object.h"
+#include "../Core/DataStructures/Vector.h"
 #include "Vector2.h"
 
 namespace AxionForge {

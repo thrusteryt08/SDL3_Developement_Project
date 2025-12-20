@@ -14,6 +14,10 @@ namespace AxionForge {
     void Renderer::Present() { SDL_RenderPresent(renderer); }
     void Renderer::Delay(int ms) { SDL_Delay(ms); }
 
+    void Renderer::SetVSync(int x) {
+        SDL_SetRenderVSync(renderer, x);
+	}
+
     void Renderer::setDrawColor(Color c, Opacity o) {
         SDL_SetRenderDrawColor(renderer, c.red, c.green, c.blue, o.alpha);
     }
@@ -22,8 +26,8 @@ namespace AxionForge {
         SDL_SetRenderScale(renderer, s, s);
     }
 
-    void Renderer::RenderObject(Object* obj) {
-        if (obj) obj->Render(this);
+    void Renderer::RenderObject(Object* object) {
+        object->Render(this);
     }
 
     void Renderer::RenderPoint(Vector2 p, Color c) {

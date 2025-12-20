@@ -2,8 +2,9 @@
 
 namespace AxionForge {
 
-    Object::Object(Vector2 pos, Vector2 sz)
-        : position(pos), size(sz) {
+    Object::Object(Vector2 position, Vector2 size) {
+        this->position = position;
+        this->size = size;
     }
 
     void Object::Show() { isRendering = true; }

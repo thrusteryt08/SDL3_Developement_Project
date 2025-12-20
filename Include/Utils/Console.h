@@ -39,6 +39,12 @@ namespace AxionForge {
             }
             std::cout << "\033[" << code << "m" << s << "\033[0m\n";
         }
+
+        static void Pause(const std::string& s) {
+            std::cout << s << '\n';
+			system("pause");
+        }
+
     };
 
 }

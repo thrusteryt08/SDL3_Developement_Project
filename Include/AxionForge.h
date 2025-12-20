@@ -1,6 +1,22 @@
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <SDL3/SDL_video.h>
 
-#include "../Include/Core/DataStructures.h"
-#include "../Include/Core/Window.h"
+#include "DataStructures.h"
+#include "Core/Window.h"
+#include "Objects.h"
+
+#include "Utils/Console.h"
+#include "Utils/Random.h"
+
+namespace AxionForge {
+
+	class Application {
+		Window* window = nullptr;
+		bool isRunning = true;
+	public:
+		Application();
+		void INIT();
+		void RUN();
+		void QUIT();
+	};
+
+}
