@@ -38,6 +38,8 @@
     <Library Include="..\..\..\SDL3\lib\x64\SDL3_test.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EventHandling\EventPump.h" />
+    <ClInclude Include="Include\EventHandling\Event.h" />
     <ClInclude Include="Include\AxionForge.h" />
     <ClInclude Include="Include\DataStructures.h" />
     <ClInclude Include="Include\Core\DataStructures\Vector.h" />

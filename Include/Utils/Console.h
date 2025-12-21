@@ -15,13 +15,41 @@ namespace AxionForge {
         static void Log(const std::string& s) {
             std::cout << "\033[32m" << s << "\033[0m\n";
         }
+        static void Log(const std::string& s, int x) {
+            std::cout << "\033[32m";
+			for (int i = 0; i < x; i++)
+                std::cout << "--";
+			std::cout << " " << s << "\033[0m\n";
+        }
 		// Use for logging warnings
         static void Warning(const std::string& s) {
             std::cout << "\033[33m" << s << "\033[0m\n";
         }
+        static void Warning(const std::string& s, int x) {
+            std::cout << "\033[33m";
+            for (int i = 0; i < x; i++)
+                std::cout << "--";
+			std::cout << " " << s << "\033[0m\n";
+        }
 		// Use for logging errors
         static void Error(const std::string& s) {
             std::cout << "\033[31m" << s << "\033[0m\n";
+        }
+        static void Error(const std::string& s, int x) {
+            std::cout << "\033[31m";
+            for (int i = 0; i < x; i++)
+                std::cout << "--";
+            std::cout << " " << s << "\033[0m\n";
+        }
+
+        static void Error(const std::string& s, const std::string& details) {
+            std::cout << "\033[31m" << s << ": " << details << "\033[0m\n";
+        }
+        static void Error(const std::string& s, const std::string& details, int x) {
+            std::cout << "\033[31m";
+            for (int i = 0; i < x; i++)
+                std::cout << "--";
+            std::cout << " " << s << ": " << details << "\033[0m\n";
         }
 		// Use for logging messages with a specific color
         static void Log(const std::string& s, COLOR color) {
