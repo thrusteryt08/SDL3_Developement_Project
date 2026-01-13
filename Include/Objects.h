@@ -1,5 +1,0 @@
-#include "Objects/Object.h"
-#include "Objects/Point.h"
-#include "Objects/Line.h"
-#include "Objects/Rect.h"
-#include "Objects/ColorRect.h"

@@ -18,37 +18,19 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Objects\Object.cpp">
+    <ClCompile Include="Include\Array.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Renderer.cpp">
+    <ClCompile Include="Include\Button.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\Rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects\ColorRect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AxionForge.cpp">
+    <ClCompile Include="Include\RenderMethodImplementation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL3.dll">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Include\Core\DataStructures\Vector.inl">
-      <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -60,46 +42,73 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Core\DataStructures\Vector.h">
+    <ClInclude Include="Include\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Objects\Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Core\Window.h">
+    <ClInclude Include="Include\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\AxionForge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\DataStructures.h">
+    <ClInclude Include="Include\Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects.h">
+    <ClInclude Include="Include\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects\Point.h">
+    <ClInclude Include="Include\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects\Line.h">
+    <ClInclude Include="Include\ColorRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects\Rect.h">
+    <ClInclude Include="Include\Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects\ColorRect.h">
+    <ClInclude Include="Include\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Objects\Texture.h">
+    <ClInclude Include="Include\LinkedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EventHandling\Event.h">
+    <ClInclude Include="Include\Opacity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EventHandling\EventPump.h">
+    <ClInclude Include="Include\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Static_Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Includes\Objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
