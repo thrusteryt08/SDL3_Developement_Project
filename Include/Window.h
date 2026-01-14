@@ -20,6 +20,9 @@ namespace AxionForge {
 		float Scale = 1.0f;
 
 		bool isDragSelectingEnabled = false;
+		bool isDragSelecting = false;
+		Vector2 dragSelectStart;
+		ColorRect dragSelectRect;
 
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;
@@ -34,6 +37,9 @@ namespace AxionForge {
 		Window() = default;
 		Window(const char* title, int width, int height) {
 			Create(title, width, height);
+			//temporary for testing
+			isDragSelectingEnabled = true;
+			Objects.Add(&dragSelectRect);
 		}
 
 		void Create(const char* title, int width, int height) {
@@ -123,12 +129,40 @@ namespace AxionForge {
 
 				if (!e)continue;
 
+				EventDispatcher d(*e);
+
+				if (isDragSelectingEnabled) {
+					d.Dispatch<MouseButtonDownEvent>([this](MouseButtonDownEvent& ev) {
+						if (ev.Button != 1) return false;
+						isDragSelecting = true;
+						dragSelectStart = ev.Position;
+						return true;
+						});
+
+					d.Dispatch<MouseMoveEvent>([this](MouseMoveEvent& ev) {
+						if (!isDragSelecting) return false;
+						Vector2 currentPos = ev.Position;
+						Vector2 rSize = currentPos - dragSelectStart;
+						if (rSize < Vector2(0))
+							dragSelectRect = ColorRect(currentPos, Vector2(-rSize.x, -rSize.y), Color(0, 0, 255, 100));
+						else
+							dragSelectRect = ColorRect(dragSelectStart, rSize, Color(0, 0, 255, 100));
+
+						return true;
+						});
+
+					d.Dispatch<MouseButtonUpEvent>([this](MouseButtonUpEvent& ev) {
+						if (!isDragSelecting) return false;
+						isDragSelecting = false;
+						dragSelectRect = ColorRect(Vector2(0, 0), Vector2(0, 0), Color(0, 0, 255, 100));
+						});
+				}
+
+
 				for (Object* object : Objects) {
 					if (Control* control = dynamic_cast<Control*>(object))
 						control->OnEvent(*e);
 				}
-
-				EventDispatcher dispatcher(*e);
 
 
 				delete e;

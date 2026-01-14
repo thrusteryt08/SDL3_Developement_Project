@@ -33,6 +33,7 @@ namespace AxionForge {
 		_WINDOW_FOCUS_LOST,
 	};
 
+	// Base Event class
 	class Event {
 	public:
 		bool Handled = false;
