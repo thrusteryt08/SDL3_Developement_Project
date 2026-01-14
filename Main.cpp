@@ -1,5 +1,4 @@
-#include "AxionForge.h"
-#include "Files.h"
+#include "AxionForge/Include/AxionForge.h"
 using namespace AxionForge;
 // To count lines of code in src and Include directories, use the following command:
 // Total lines of code that u wrote

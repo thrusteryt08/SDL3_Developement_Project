@@ -18,13 +18,13 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Array.h">
+    <ClCompile Include="AxionForge\Include\Array.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Button.h">
+    <ClCompile Include="AxionForge\Include\Button.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Include\RenderMethodImplementation.cpp">
+    <ClCompile Include="AxionForge\Include\RenderMethodImplementation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,73 +42,73 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Renderer.h">
+    <ClInclude Include="AxionForge\Include\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Object.h">
+    <ClInclude Include="AxionForge\Include\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\AxionForge.h">
+    <ClInclude Include="AxionForge\Include\AxionForge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Point.h">
+    <ClInclude Include="AxionForge\Include\Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Line.h">
+    <ClInclude Include="AxionForge\Include\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Rect.h">
+    <ClInclude Include="AxionForge\Include\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ColorRect.h">
+    <ClInclude Include="AxionForge\Include\ColorRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Control.h">
+    <ClInclude Include="AxionForge\Include\Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Node.h">
+    <ClInclude Include="AxionForge\Include\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\LinkedList.h">
+    <ClInclude Include="AxionForge\Include\LinkedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Opacity.h">
+    <ClInclude Include="AxionForge\Include\Opacity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Color.h">
+    <ClInclude Include="AxionForge\Include\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Singleton.h">
+    <ClInclude Include="AxionForge\Include\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Static_Class.h">
+    <ClInclude Include="AxionForge\Include\Static_Class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Vector2.h">
+    <ClInclude Include="AxionForge\Include\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Window.h">
+    <ClInclude Include="AxionForge\Include\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Event.h">
+    <ClInclude Include="AxionForge\Include\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Console.h">
+    <ClInclude Include="AxionForge\Include\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Random.h">
+    <ClInclude Include="AxionForge\Include\Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Label.h">
+    <ClInclude Include="AxionForge\Include\Label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Includes\Objects.h">
+    <ClInclude Include="AxionForge\Include\Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Files.h">
+    <ClInclude Include="AxionForge\Include\Files.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NeuralNetwork.h">
+    <ClInclude Include="AxionForge\Include\NeuralNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
