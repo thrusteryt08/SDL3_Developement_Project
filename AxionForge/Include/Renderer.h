@@ -2,7 +2,11 @@
 #include <SDL3/SDL_render.h>
 #include "Color.h"
 #include "Vector2.h"
-#include "Objects.h"
+#include "Point.h"
+#include "Line.h"
+#include "ColorRect.h"
+#include "Rect.h"
+#include "Object.h"
 
 namespace AxionForge {
 

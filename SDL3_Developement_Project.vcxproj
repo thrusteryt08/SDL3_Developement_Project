@@ -37,7 +37,6 @@
     <ClInclude Include="AxionForge\Include\Console.h" />
     <ClInclude Include="AxionForge\Include\Event.h" />
     <ClInclude Include="AxionForge\Include\Files.h" />
-    <ClInclude Include="AxionForge\Include\Objects.h" />
     <ClInclude Include="AxionForge\Include\Label.h" />
     <ClInclude Include="AxionForge\Include\NeuralNetwork.h" />
     <ClInclude Include="AxionForge\Include\Random.h" />

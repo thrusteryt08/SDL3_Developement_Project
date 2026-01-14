@@ -1,6 +1,10 @@
 #pragma once
 #include "Renderer.h"
-#include "Objects.h"
+#include "Object.h"
+#include "Point.h"
+#include "Line.h"
+#include "ColorRect.h"
+
 
 namespace AxionForge {
 

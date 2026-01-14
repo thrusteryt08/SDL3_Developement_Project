@@ -1,3 +1,4 @@
+#pragma once
 #include "Rect.h"
 #include "Color.h"
 #include "Renderer.h"

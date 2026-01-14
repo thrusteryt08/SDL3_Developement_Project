@@ -102,9 +102,6 @@
     <ClInclude Include="AxionForge\Include\Label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxionForge\Include\Objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AxionForge\Include\Files.h">
       <Filter>Header Files</Filter>
     </ClInclude>
