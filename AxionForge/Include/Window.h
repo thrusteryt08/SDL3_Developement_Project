@@ -6,6 +6,10 @@
 #include "Control.h"
 namespace AxionForge {
 
+	bool isInside(Rect& Area, Rect& other) {
+		return Area.isColliding(other.position) && Area.isColliding(other.position + other.size);
+	}
+
 	class Window {
 #pragma region private
 	private:
@@ -161,6 +165,12 @@ namespace AxionForge {
 						if (!isDragSelecting) return false;
 						isDragSelecting = false;
 						dragSelectRect = ColorRect(Vector2(0, 0), Vector2(0, 0), Color(0, 0, 255, 100));
+
+						for (Object* object : Objects) {
+
+						}
+
+						return true;
 						});
 				}
 
