@@ -85,7 +85,7 @@ namespace AxionForge {
 				};
 			button->onRelease = [](Control& sender, Event& event) {
 				if (Button* b = dynamic_cast<Button*>(&sender))
-					b->BackColor = Color(150, 150, 150);
+					b->BackColor = Color(200, 200, 200);
 				Console::Log("Button released.");
 				};
 
@@ -99,7 +99,8 @@ namespace AxionForge {
 
 			while (true) {
 
-				window->HandleEvents();
+				if(window->HandleEvents())
+					return;
 
 
 

@@ -122,7 +122,7 @@ namespace AxionForge {
 			renderer.Present();
 		}
 
-		void HandleEvents() {
+		bool HandleEvents() {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				Event* e = SDLEventTranslator::Translate(event);
@@ -130,6 +130,12 @@ namespace AxionForge {
 				if (!e)continue;
 
 				EventDispatcher d(*e);
+
+				d.Dispatch<QuitEvent>([this](QuitEvent& ev) {
+					return true;
+					});
+				if(e->Handled)
+					return true;
 
 				if (isDragSelectingEnabled) {
 					d.Dispatch<MouseButtonDownEvent>([this](MouseButtonDownEvent& ev) {
@@ -167,6 +173,7 @@ namespace AxionForge {
 
 				delete e;
 			}
+			return false;
 		}
 
 
