@@ -19,7 +19,8 @@ namespace AxionForge {
 	}
 
 	void ColorRect::Render(Renderer* renderer) {
-		renderer->RenderFillRect(*this);
+		renderer->RenderColorRect(*this);
 	}
+
 
 }

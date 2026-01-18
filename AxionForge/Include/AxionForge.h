@@ -5,6 +5,7 @@
 #include "Console.h"
 #include "Label.h"
 #include "Button.h"
+#include "TextBox.h"
 
 
 namespace AxionForge {
@@ -64,32 +65,7 @@ namespace AxionForge {
 			INIT_SDL();
 			CreateWindow();
 
-			Button* button = new Button("Button");
-			button->onClick = [](Control& sender, Event& event) {
-				Console::Log("Button clicked!");
-				};
-			button->onEnter = [](Control& sender, Event& event) {
-				if (Button* b = dynamic_cast<Button*>(&sender))
-					b->BackColor = Color(150, 150, 150);
-				Console::Log("Mouse entered button area.");
-				};
-			button->onLeave = [](Control& sender, Event& event) {
-				if (Button* b = dynamic_cast<Button*>(&sender))
-					b->BackColor = Color(200, 200, 200);
-				Console::Log("Mouse left button area.");
-				};
-			button->onPress = [](Control& sender, Event& event) {
-				if (Button* b = dynamic_cast<Button*>(&sender))
-					b->BackColor = Color(100, 100, 100);
-				Console::Log("Button pressed.");
-				};
-			button->onRelease = [](Control& sender, Event& event) {
-				if (Button* b = dynamic_cast<Button*>(&sender))
-					b->BackColor = Color(200, 200, 200);
-				Console::Log("Button released.");
-				};
-
-			window->Objects.Add(button);
+			AppLoad();
 
 
 			Console::Log("Application initialized successfully.");
@@ -97,12 +73,24 @@ namespace AxionForge {
 		void RUN() {
 			Console::Log("Running Axion Forge Application...");
 
-			while (true) {
+			bool appState = true;
 
-				if(window->HandleEvents())
-					return;
+			while (appState) {
 
+				Iterate(appState);
 
+				SDL_Event event;
+				while (SDL_PollEvent(&event)) {
+					Event* e = SDLEventTranslator::Translate(event);
+
+					if (!e)continue;
+					if (window->HandleEvents(*e))
+						return;
+
+					AppEvent(*e);
+
+					delete e;
+				}
 
 				window->Render();
 			}
@@ -111,6 +99,8 @@ namespace AxionForge {
 		void QUIT() {
 			Console::Log("Quitting Axion Forge Application...");
 			//
+
+			Exit();
 
 
 			DestroyWindow();
@@ -121,6 +111,15 @@ namespace AxionForge {
 			Console::Log("Axion Forge Application has exited.\n");
 
 		}
+
+		void AppLoad();
+
+		void Iterate(bool& _appState);
+
+		void AppEvent(Event& e);
+
+		void Exit();
+
 	};
 
 }

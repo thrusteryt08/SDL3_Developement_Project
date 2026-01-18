@@ -6,46 +6,49 @@
 #include "Control.h"
 namespace AxionForge {
 
-	bool isInside(Rect& Area, Rect& other) {
-		return Area.isColliding(other.position) && Area.isColliding(other.position + other.size);
-	}
-
+	// Represents a window in the Axion Forge framework
+	// Manages rendering, events, and contained objects
+	// Uses SDL for window management and rendering
 	class Window {
-#pragma region private
 	private:
+		// SDL window instance
 		SDL_Window* window = nullptr;
+		// Background color of the window
 		Color backgroundcolor = ColorName::White;
 
-		Renderer renderer;
-		bool change = false;
-
+		// Window dimensions and scale
 		int Width = 500;
 		int Height = 500;
 		float Scale = 1.0f;
 
+		// Drag selection variables
 		bool isDragSelectingEnabled = false;
 		bool isDragSelecting = false;
 		Vector2 dragSelectStart;
 		ColorRect dragSelectRect;
 
+		Control* focusedControl = nullptr;
+
+		// Disable copy and move semantics
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;
 		Window(Window&&) = delete;
 		Window& operator=(Window&&) = delete;
 
-#pragma endregion
-
 	public:
+		// Renderer instance for drawing
+		Renderer renderer;
+		// List of objects contained in the window
 		LinkedList<Object*> Objects;
 
 		Window() = default;
+		// Create a window with specified title and dimensions
 		Window(const char* title, int width, int height) {
 			Create(title, width, height);
 			//temporary for testing
-			isDragSelectingEnabled = true;
 			Objects.Add(&dragSelectRect);
 		}
-
+		// Create or recreate the window
 		void Create(const char* title, int width, int height) {
 			if (window) {
 				SDL_DestroyWindow(window);
@@ -64,11 +67,15 @@ namespace AxionForge {
 				renderer.InstanceAddress()
 			);
 		}
-
+		// Getters and setters for background color
 		void setBackgroundColor(Color color) {
 			backgroundcolor = color;
 		}
+		Color getBackgroundColor() const {
+			return backgroundcolor;
+		}
 
+		// Getters and setters for window size
 		Vector2 getSize() const {
 			return Vector2(Width, Height);
 		}
@@ -81,6 +88,7 @@ namespace AxionForge {
 			SDL_SetWindowSize(window, Width, Height);
 		}
 
+		// Getters and setters for scale
 		float getScale() const {
 			return Scale;
 		}
@@ -89,6 +97,7 @@ namespace AxionForge {
 			renderer.setScale(Scale);
 		}
 
+		// Delay functions
 		void Delay(int x) {
 			SDL_Delay(x);
 		}
@@ -96,6 +105,7 @@ namespace AxionForge {
 			SDL_DelayNS(x);
 		}
 
+		// Render all objects in the window
 		void RenderObjects() {
 			for (Object* object : Objects) {
 				if (object && object->isShown())
@@ -103,10 +113,7 @@ namespace AxionForge {
 			}
 		}
 
-		bool isChanged() const {
-			return change;
-		}
-
+		// Set vertical synchronization
 		void setVSync(int x) {
 			renderer.SetVSync(x);
 		}
@@ -117,77 +124,74 @@ namespace AxionForge {
 			RenderObjects();
 		}
 
-		void BakeNewObjects(Object* object) {
-			renderer.RenderObject(object);
-		}
-
 		void Render() {
 			BakeRender();
 			renderer.Present();
 		}
 
-		bool HandleEvents() {
-			SDL_Event event;
-			while (SDL_PollEvent(&event)) {
-				Event* e = SDLEventTranslator::Translate(event);
+		bool HandleEvents(Event& e) {
 
-				if (!e)continue;
+			EventDispatcher d(e);
 
-				EventDispatcher d(*e);
+			d.Dispatch<QuitEvent>([this](QuitEvent& ev) {
+				return true;
+				});
+			if (e.Handled)
+				return true;
 
-				d.Dispatch<QuitEvent>([this](QuitEvent& ev) {
+			if (isDragSelectingEnabled) {
+				d.Dispatch<MouseButtonDownEvent>([this](MouseButtonDownEvent& ev) {
+					if (ev.Button != 1) return false;
+					isDragSelecting = true;
+					dragSelectStart = ev.Position;
 					return true;
 					});
-				if(e->Handled)
+
+				d.Dispatch<MouseMoveEvent>([this](MouseMoveEvent& ev) {
+					if (!isDragSelecting) return false;
+					Vector2 currentPos = ev.Position;
+					Vector2 rSize = currentPos - dragSelectStart;
+					if (rSize < Vector2(0))
+						dragSelectRect = ColorRect(currentPos, Vector2(-rSize.x, -rSize.y), Color(0, 0, 255, 100));
+					else
+						dragSelectRect = ColorRect(dragSelectStart, rSize, Color(0, 0, 255, 100));
+
 					return true;
+					});
 
-				if (isDragSelectingEnabled) {
-					d.Dispatch<MouseButtonDownEvent>([this](MouseButtonDownEvent& ev) {
-						if (ev.Button != 1) return false;
-						isDragSelecting = true;
-						dragSelectStart = ev.Position;
-						return true;
-						});
+				d.Dispatch<MouseButtonUpEvent>([this](MouseButtonUpEvent& ev) {
+					if (!isDragSelecting) return false;
+					isDragSelecting = false;
+					dragSelectRect = ColorRect(Vector2(0, 0), Vector2(0, 0), Color(0, 0, 255, 100));
 
-					d.Dispatch<MouseMoveEvent>([this](MouseMoveEvent& ev) {
-						if (!isDragSelecting) return false;
-						Vector2 currentPos = ev.Position;
-						Vector2 rSize = currentPos - dragSelectStart;
-						if (rSize < Vector2(0))
-							dragSelectRect = ColorRect(currentPos, Vector2(-rSize.x, -rSize.y), Color(0, 0, 255, 100));
-						else
-							dragSelectRect = ColorRect(dragSelectStart, rSize, Color(0, 0, 255, 100));
+					for (Object* object : Objects) {
 
-						return true;
-						});
+					}
 
-					d.Dispatch<MouseButtonUpEvent>([this](MouseButtonUpEvent& ev) {
-						if (!isDragSelecting) return false;
-						isDragSelecting = false;
-						dragSelectRect = ColorRect(Vector2(0, 0), Vector2(0, 0), Color(0, 0, 255, 100));
-
-						for (Object* object : Objects) {
-
-						}
-
-						return true;
-						});
-				}
-
-
-				for (Object* object : Objects) {
-					if (Control* control = dynamic_cast<Control*>(object))
-						control->OnEvent(*e);
-				}
-
-
-				delete e;
+					return true;
+					});
 			}
+
+			if(focusedControl)
+				if (!focusedControl->wantsFocus) {
+					focusedControl->UnFocus();
+					focusedControl = nullptr;
+				}
+
+			for (Object* object : Objects) {
+				if (Control * control = dynamic_cast<Control*>(object)) {
+					if (control->wantsFocus) {
+						if (!focusedControl) {
+							focusedControl = control;
+							control->Focus();
+						}
+					}
+					control->OnEvent(e);
+				}
+			}
+
 			return false;
 		}
-
-
-
 
 		~Window() {
 			if (window) {

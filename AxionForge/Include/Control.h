@@ -8,6 +8,18 @@ namespace AxionForge {
 	class Control : public Object {
 
 	public:
+		bool wantsFocus = false;
+		bool isFocused = false;
+
+		virtual void Focus() {
+			isFocused = true;
+		}
+
+		virtual void UnFocus() {
+			isFocused = false;
+		}
+
+		virtual void Requests() {}
 
 		virtual bool isColliding(Vector2 point) const {
 			return false;

@@ -22,6 +22,7 @@
     <ClCompile Include="AxionForge\Include\Array.h" />
     <ClCompile Include="AxionForge\Include\Button.h" />
     <ClCompile Include="AxionForge\Include\RenderMethodImplementation.cpp" />
+    <ClCompile Include="EditFile.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="AxionForge\Include\Opacity.h" />
     <ClInclude Include="AxionForge\Include\Singleton.h" />
     <ClInclude Include="AxionForge\Include\Static_Class.h" />
+    <ClInclude Include="AxionForge\Include\TextBox.h" />
     <ClInclude Include="AxionForge\Include\Vector2.h" />
     <ClInclude Include="AxionForge\Include\Window.h" />
   </ItemGroup>

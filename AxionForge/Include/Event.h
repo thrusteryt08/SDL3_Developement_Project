@@ -87,6 +87,39 @@ namespace AxionForge {
 		EventType GetType() const override { return StaticType(); }
 	};
 
+	class KeyEvent : public Event {
+	public:
+		uint32_t KeyCode;
+		KeyEvent(uint32_t keycode) : KeyCode(keycode) {}
+	};
+
+	class KeyDownEvent : public KeyEvent {
+	public:
+		using KeyEvent::KeyEvent;
+		static EventType StaticType() { return EventType::_KEY_DOWN; }
+		EventType GetType() const override { return StaticType(); }
+	};
+
+	class KeyUpEvent : public KeyEvent {
+	public:
+		using KeyEvent::KeyEvent;
+		static EventType StaticType() { return EventType::_KEY_UP; }
+		EventType GetType() const override { return StaticType(); }
+	};
+
+	class TextInputEvent : public Event {
+	public:
+		std::string Text;
+
+		TextInputEvent(const std::string& text) : Text(text) {}
+
+		static EventType StaticType() { return EventType::_TEXT_INPUT; }
+		EventType GetType() const override { return StaticType(); }
+
+	};
+
+
+
 	class SDLEventTranslator {
 	public:
 		static Event* Translate(const SDL_Event& e) {
@@ -116,7 +149,19 @@ namespace AxionForge {
 					e.button.y,
 					e.button.button
 				);
+			case SDL_EVENT_KEY_DOWN:
+				return new KeyDownEvent(e.key.key);
+				break;
+			case SDL_EVENT_KEY_UP:
+				return new KeyUpEvent(e.key.key);
+				break;
+			case SDL_EVENT_TEXT_INPUT:
+				return new TextInputEvent(std::string(e.text.text));
+				break;
+			default:
+				break;
 			}
+			
 			return nullptr;
 		}
 	};

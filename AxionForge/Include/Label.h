@@ -5,10 +5,6 @@
 #include "Control.h"
 
 namespace AxionForge {
-	
-	void Label_onClick_Default(Control* control, SDL_Event* event) {
-		Console::Log(control->ToString());
-	}
 
 	class Label : public Control {
 	public:
@@ -38,7 +34,7 @@ namespace AxionForge {
 		}
 
 		void Render(Renderer* renderer) override {
-			renderer->RenderFillRect(ColorRect(position, size, BackColor));
+			renderer->RenderColorRect(ColorRect(position, size, BackColor));
 			renderer->setDrawColor(FontColor);
 			SDL_RenderDebugText(renderer->Instance(), position.x, position.y, &Text[0]);
 		}

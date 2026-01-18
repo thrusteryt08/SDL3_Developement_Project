@@ -24,6 +24,7 @@ namespace AxionForge {
 	public:
 		Vector2 size;
 
+		// Colors
 		Color FontColor = ColorName::Black;
 		Color BackColor = Color(200, 200, 200);;
 
@@ -46,12 +47,15 @@ namespace AxionForge {
 			return getArea().isColliding(point);
 		}
 
-		Method onClick;
-		Method onRightClick;
-		Method onEnter;
-		Method onLeave;
-		Method onPress;
-		Method onRelease;
+		Method onEnter = nullptr;
+		Method onLeave = nullptr;
+
+		Method onClick = nullptr;
+		Method onRightClick = nullptr;
+		Method onCancel = nullptr;
+
+		Method onPress = nullptr;
+		Method onRelease = nullptr;
 
 		void OnEvent(Event& e) override {
 			EventDispatcher d(e);
@@ -80,20 +84,23 @@ namespace AxionForge {
 				});
 
 			d.Dispatch<MouseButtonUpEvent>([this](MouseButtonUpEvent& ev) {
-				if (state == ButtonState::Pressed && ev.Button == 1) {
+				if (state != ButtonState::Pressed || ev.Button != 1)
+					return false;
+				
+				bool inside = isColliding(ev.Position);
+				state = inside ? ButtonState::Hover : ButtonState::None;
 
-					bool inside = isColliding(ev.Position);
-					state = inside ? ButtonState::Hover : ButtonState::None;
-					if (inside && onClick) onClick(*this, ev);
-					if (onRelease) onRelease(*this, ev);
-					return true;
-				}
-				return false;
+				if (onRelease) onRelease(*this, ev);
+				if (inside && onClick) onClick(*this, ev);
+				else
+					if (!inside && onCancel) onCancel(*this, ev);
+
+				return true;
 				});
 		}
 
 		void Render(Renderer* renderer) override {
-			renderer->RenderFillRect(ColorRect(position, size, BackColor));
+			renderer->RenderColorRect(ColorRect(position, size, BackColor));
 			renderer->setDrawColor(FontColor);
 			SDL_RenderDebugText(renderer->Instance(), position.x, position.y, &Text[0]);
 		}

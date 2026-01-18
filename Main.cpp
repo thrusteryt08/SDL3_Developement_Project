@@ -1,3 +1,4 @@
+#pragma once
 #include "AxionForge/Include/AxionForge.h"
 using namespace AxionForge;
 // To count lines of code in src and Include directories, use the following command:
@@ -6,7 +7,5 @@ using namespace AxionForge;
 
 int main(int argc, char* argv[]) {
 	Application app;
-	
-
 	return 0;
 }
