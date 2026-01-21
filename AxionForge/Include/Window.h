@@ -21,6 +21,8 @@ namespace AxionForge {
 		int Height = 500;
 		float Scale = 1.0f;
 
+		bool shouldBakeRender = true;
+
 		// Drag selection variables
 		bool isDragSelectingEnabled = false;
 		bool isDragSelecting = false;
@@ -34,12 +36,12 @@ namespace AxionForge {
 		Window& operator=(const Window&) = delete;
 		Window(Window&&) = delete;
 		Window& operator=(Window&&) = delete;
-
+		unsigned int ObjectCount;
 	public:
 		// Renderer instance for drawing
 		Renderer renderer;
 		// List of objects contained in the window
-		LinkedList<Object*> Objects;
+		Array<Object*> Objects;
 
 		Window() = default;
 		// Create a window with specified title and dimensions
@@ -47,6 +49,9 @@ namespace AxionForge {
 			Create(title, width, height);
 			//temporary for testing
 			Objects.Add(&dragSelectRect);
+
+
+			BakeRender();
 		}
 		// Create or recreate the window
 		void Create(const char* title, int width, int height) {
@@ -123,13 +128,23 @@ namespace AxionForge {
 			renderer.Clear();
 			RenderObjects();
 		}
-
-		void Render() {
-			BakeRender();
-			renderer.Present();
+		// returns true if renderer had to bake
+		bool Render() {
+			if(shouldBakeRender) {
+				shouldBakeRender = false;
+				BakeRender();
+				renderer.Present();
+				return true;
+			}
+			return false;
 		}
 
 		bool HandleEvents(Event& e) {
+
+			if (ObjectCount != Objects.Length()) {
+				shouldBakeRender = true;
+				ObjectCount = Objects.Length();
+			}
 
 			EventDispatcher d(e);
 
@@ -178,6 +193,9 @@ namespace AxionForge {
 					focusedControl = nullptr;
 				}
 
+			if (e.Handled)
+				return false;
+
 			for (Object* object : Objects) {
 				if (Control * control = dynamic_cast<Control*>(object)) {
 					if (control->wantsFocus) {
@@ -186,7 +204,8 @@ namespace AxionForge {
 							control->Focus();
 						}
 					}
-					control->OnEvent(e);
+					if(control->OnEvent(e))
+						shouldBakeRender = true;
 				}
 			}
 

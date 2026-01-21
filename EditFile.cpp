@@ -2,41 +2,15 @@
 
 namespace AxionForge {
 
-	void Button_Click(Control& sender, Event& event) {
-		Console::Log("Button clicked!");
-	}
-	void Button_Enter(Control& sender, Event& event) {
-		Console::Log("Mouse entered button area.");
-	}
-	void Button_Leave(Control& sender, Event& event) {
-		Console::Log("Mouse left button area.");
-	}
-	void Button_Press(Control& sender, Event& event) {
-		Console::Log("Button pressed.");
-	}
-	void Button_Release(Control& sender, Event& event) {
-		Console::Log("Button released.");
-	}
-	void Button_Cancel(Control& sender, Event& event) {
-		Console::Log("Button click canceled");
+	void CheckBoxChanged(Control& control, Event& event) {
+		CheckBox& checkbox = static_cast<CheckBox&>(control);
+		Console::Log("CheckBox state changed. New state: " + std::string(checkbox.isChecked ? "Checked" : "Unchecked"));
 	}
 
 	void Application::AppLoad() {
-		Button* button = new Button("Button");
-
-		button->onClick = Button_Click;
-		button->onEnter = Button_Enter;
-		button->onLeave = Button_Leave;
-		button->onPress = Button_Press;
-		button->onRelease = Button_Release;
-		button->onCancel = Button_Cancel;
-
-		TextBox* textBox = new TextBox();
-		textBox->position = Vector2(200, 200);
-		window->Objects.Add(textBox);
-
-
-		window->Objects.Add(button);
+		TextBox *textbox = new TextBox(Vector2(50, 50), "text");
+		const int _Count = 1000000;
+		
 	}
 
 	void Application::Iterate(bool& _appState) {

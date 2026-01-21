@@ -6,7 +6,7 @@
 #include "Label.h"
 #include "Button.h"
 #include "TextBox.h"
-
+#include "CheckBox.h"
 
 namespace AxionForge {
 
@@ -35,7 +35,7 @@ namespace AxionForge {
 
 			window = new Window("Axion Forge Application", 1000, 500);
 			window->setBackgroundColor(ColorName::White);
-			window->setVSync(1);
+			//window->setVSync(1);
 
 			Console::Log("Main application window created successfully.");
 		}
@@ -75,6 +75,9 @@ namespace AxionForge {
 
 			bool appState = true;
 
+			Uint64 start = SDL_GetTicks();
+			unsigned int frameCount = 0;
+			unsigned int bakeCount = 0;
 			while (appState) {
 
 				Iterate(appState);
@@ -91,8 +94,16 @@ namespace AxionForge {
 
 					delete e;
 				}
+				if (window->Render())
+					bakeCount++;
+				frameCount++;
 
-				window->Render();
+				if (start + 1000 <= SDL_GetTicks()) {
+					std::cout << "FPS: " << frameCount << " | Bakes: " << bakeCount << " | Objects: " << window->Objects.Length() << '\n';
+					frameCount = 0;
+					bakeCount = 0;
+					start = SDL_GetTicks();
+				}
 			}
 			Console::Log("Application run loop has ended.\n");
 		}

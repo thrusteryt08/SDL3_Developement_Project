@@ -57,7 +57,7 @@ namespace AxionForge {
 		Method onPress = nullptr;
 		Method onRelease = nullptr;
 
-		void OnEvent(Event& e) override {
+		bool OnEvent(Event& e) override {
 			EventDispatcher d(e);
 
 			d.Dispatch<MouseMoveEvent>([this](MouseMoveEvent& ev) {

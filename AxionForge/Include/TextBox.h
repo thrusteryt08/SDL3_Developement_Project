@@ -20,6 +20,15 @@ namespace AxionForge {
 
 		TextBox() {}
 
+		TextBox(Vector2 position) {
+			this->position = position;
+		}
+
+		TextBox(Vector2 position, string text) {
+			this->position = position;
+			Text = text;
+		}
+
 		TextBox(string text) : Text(text) {}
 
 		bool hasTextInput = false;
@@ -44,7 +53,7 @@ namespace AxionForge {
 			RequestStopTextInput(SDL_GetKeyboardFocus());
 		}
 
-		void OnEvent(Event& e) override {
+		bool OnEvent(Event& e) override {
 			EventDispatcher d(e);
 
 			d.Dispatch<MouseButtonDownEvent>([this](MouseButtonDownEvent& ev) {
@@ -72,7 +81,9 @@ namespace AxionForge {
 				Text += ev.Text;
 				return true;
 				});
-
+			if (e.Handled)
+				return true;
+			return false;
 		}
 
 
@@ -82,7 +93,7 @@ namespace AxionForge {
 		void Render(Renderer* renderer) override {
 			renderer->RenderColorRect(ColorRect(position, size, backColor));
 			renderer->setDrawColor(fontColor);
-			SDL_RenderDebugText(renderer->Instance(), position.x, position.y, &Text[0]);
+			SDL_RenderDebugText(renderer->Instance(), position.x, position.y, Text.c_str());
 		}
 	};
 

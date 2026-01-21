@@ -30,6 +30,9 @@
     <ClCompile Include="EditFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AxionForge\Include\CheckBox.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL3.dll">
@@ -112,6 +115,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AxionForge\Include\TextBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AxionForge\Include\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

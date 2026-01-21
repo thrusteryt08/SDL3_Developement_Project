@@ -26,7 +26,7 @@ namespace AxionForge {
 		}
 
 
-		virtual void OnEvent(Event& e) { }
+		virtual bool OnEvent(Event& e) { return false; }
 
 		virtual std::string ToString() {
 			return "Control";
